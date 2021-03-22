@@ -1,0 +1,50 @@
+---
+#
+# Documentation:
+# https://docs.sonarqube.org/latest/instance-administration/delegated-auth/
+#
+sonarqube:
+  download_url: "https://binaries.sonarsource.com/Distribution/sonarqube/"
+  version: "8.7.1.42226"
+  install_root: "/opt"
+  home_dir: "/data-000/sonarqube"
+  log_dir: "/data-000/sonarqube/logs"
+  user: "sonarqube"
+  group: "sonarqube"
+  # When using a reverse proxy in front of Sonarqube, add: -Djdk.http.auth.tunneling.disabledSchemes=\"\"
+  java_opts: "-Xmx4096m -XX:+HeapDumpOnOutOfMemoryError"
+  jdbc:
+    url: "jdbc:postgresql://127.0.0.1/sonarqube"
+    user: "change_me_database_user"
+    pass: "change_me_database_password"
+  ldap:
+    enable: true
+    servers:
+      - id: nmo-dc-003
+        realm: "NETMATCH.LOCAL"
+        url: "ldap://nmo-dc-003.netmatch.local:389"
+        binddn: "SonarQube"
+        password: "yJy0505Dbc"
+        user_base_dn: "OU=Users,OU=Gloabl,DC=netmatch,DC=local"
+        user_request: "(&(objectClass=user)(sAMAccountName={login}))"
+        user_real_name_attr: "cn"
+        user_email_attr: "mail"
+        group_base_dn: "OU=Groups,OU=Global,DC=netmatch,DC=local"
+        group_request: "(&(objectClass=group)(member={dn}))"
+      - id: nmo-dc-004
+        realm: "NETMATCH.LOCAL"
+        url: "ldap://nmo-dc-004.netmatch.local:389"
+        binddn: "SonarQube"
+        password: "yJy0505Dbc"
+        user_base_dn: "OU=Users,OU=Gloabl,DC=netmatch,DC=local"
+        user_request: "(&(objectClass=user)(sAMAccountName={login}))"
+        user_real_name_attr: "cn"
+        user_email_attr: "mail"
+        group_base_dn: "OU=Groups,OU=Global,DC=netmatch,DC=local"
+        group_request: "(&(objectClass=group)(member={dn}))"
+  maven:
+    repo:
+      url: "http://gcp-nmt-nxs-101.netmatch.eu:8081/repository/maven-maven-x86_64/"
+      user: ""
+      pass: ""
+    version: "3.6.3"

@@ -258,39 +258,38 @@ sonar.security.localUsers=<%= [@ldap['local_users']].flatten.join(',') %>
 sonar.authenticator.downcase=<%= @ldap['authenticator_downcase'] %>
 <% end -%>
 
-ldap.url=<%= @ldap['url'] %>
+ldap.servers=<%= @ldap['servers'].map { |server| server['name'] }.join(',').gsub(/-/, '_') %>
 
-<% if @ldap['bind_dn'] -%>
-ldap.bindDn=<%= @ldap['bind_dn'] %>
-<% end -%>
-<% if @ldap['bind_password'] -%>
-ldap.bindPassword=<%= @ldap['bind_password'] %>
-<% end -%>
+<%- @ldap['servers'].each() do |server| -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.realm=<%= server['realm'] %>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.url=<%= server['url'] %>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.bindDn=<%= server['bind_dn'] %>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.bindPassword=<%= server['password'] %>
+  <%- if server['user_base_dn'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.user.baseDn=<%= server['user_base_dn'] %>
+  <%- end -%>
+  <%- if server['user_request'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.user.request=<%= server['user_request'] %>
+  <%- end -%>
+  <% if server['user_real_name_attribute'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.user.realNameAttribute=<%= @ldap['user_real_name_attribute'] %>
+  <% end -%>
+  <% if server['user_email_attribute'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.user.emailAttribute=<%= @ldap['user_email_attribute'] %>
+  <% end -%>
+  <%- if server['group_base_dn'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.group.baseDn=<%= server['group_base_dn'] %>
+  <%- end -%>
+  <%- if server['group_request'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.group.request=<%= server['group_request'] %>
+  <%- end -%>
+  <% if server['group_id_attribute'] -%>
+ldap.<%= server['name'].gsub(/-/, '_') -%>.group.idAttribute=<%= server['group_id_attribute'] %>
+  <% end -%>
+<%- end -%>
+
 <% if @ldap['authentication'] -%>
 ldap.authentication=<%= @ldap['authentication'] %>
-<% end -%>
-
-<% if @ldap['user_base_dn'] -%>
-ldap.user.baseDn: <%= @ldap['user_base_dn'] %>
-<% end -%>
-<% if @ldap['user_request'] -%>
-ldap.user.request: <%= @ldap['user_request'] %>
-<% end -%>
-<% if @ldap['user_real_name_attribute'] -%>
-ldap.user.realNameAttribute=<%= @ldap['user_real_name_attribute'] %>
-<% end -%>
-<% if @ldap['user_email_attribute'] -%>
-ldap.user.emailAttribute=<%= @ldap['user_email_attribute'] %>
-<% end -%>
-
-<% if @ldap['group_base_dn'] -%>
-ldap.group.baseDn=<%= @ldap['group_base_dn'] %>
-<% end -%>
-<% if @ldap['group_request'] -%>
-ldap.group.request=<%= @ldap['group_request'] %>
-<% end -%>
-<% if @ldap['group_id_attribute'] -%>
-ldap.group.idAttribute=<%= @ldap['group_id_attribute'] %>
 <% end -%>
 
 <% elsif !@pam.empty? -%>

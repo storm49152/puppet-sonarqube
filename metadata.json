@@ -1,13 +1,13 @@
 {
-  "name": "maestrodev-sonarqube",
-  "version": "2.6.8",
-  "author": "maestrodev",
+  "name": "storm49152-sonarqube",
+  "version": "2.7.0",
+  "author": "storm49152",
   "summary": "SonarQube installation and configuration",
   "license": "Apache-2.0",
-  "source": "http://github.com/maestrodev/puppet-sonarqube",
-  "project_page": "http://github.com/maestrodev/puppet-sonarqube",
-  "issues_url": "https://github.com/maestrodev/puppet-sonarqube/issues",
-  "description": "A module to install and configure SonarQube (former Sonar)",
+  "source": "http://github.com/storm49152/puppet-sonarqube",
+  "project_page": "http://github.com/storm49152/puppet-sonarqube",
+  "issues_url": "https://github.com/storm49152/puppet-sonarqube/issues",
+  "description": "A module to install and configure SonarQube (former Sonar), forked from maestrodev/puppet-sonarqube",
   "dependencies": [
     {
       "name": "maestrodev/wget",
@@ -124,7 +124,7 @@
     },
     {
       "name": "puppet",
-      "version_requirement": ">=2.7.17"
+      "version_requirement": ">=4.0.0"
     }
   ]
 }
